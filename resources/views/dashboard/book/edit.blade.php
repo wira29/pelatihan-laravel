@@ -31,7 +31,7 @@
             </ul>
           </div>
         </div>
-        @endif
+        @endif`
         <div class="card">  
             <div class="card-body">
                 <form action="{{ route('book.update', $book->id) }}" method="POST">
