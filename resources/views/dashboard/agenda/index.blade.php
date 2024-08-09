@@ -30,7 +30,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Halaman Buku</h1>
+            <h1>Halaman Agenda</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -54,7 +54,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <a href="{{ route('book.create') }}" class="btn btn-primary">Tambah Data</a>
+          <a href="{{ route('agenda.create') }}" class="btn btn-primary">Tambah Data</a>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -70,41 +70,27 @@
                 <thead>
                 <tr>
                   <th>No</th>
-                  <th>Gambar</th>
-                  <th>Buku</th>
+                  <th>Agenda</th>
                   <th>Deskripsi</th>
+                  <th>Tanggal</th>
                   <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach($books as $book)
+                  @foreach($agendas as $agenda)
                   <tr>
                     <td>{{ $loop->iteration }}</td>
+                    <td>{{ $agenda->title }}</td>
+                    <td>{{ $agenda->deskripsi }}</td>
+                    <td>{{ $agenda->tanggal_mulai }} - {{ $agenda->tanggal_selesai }}</td>
                     <td>
-                      <img src="{{ $book->gambar ? asset('storage/'.$book->gambar) : asset('not-found.jpg') }}" style="width: 100px; height: 100px;" alt="Gambar Buku" class="img-fluid rounded">
-                    </td>
-                    <td>
-                      <h3>{{ $book->nama }}</h3>
-                      <p>{{ $book->category->nama }}</p>
-                    </td>
-                    <td>
-                      {{ $book->deskripsi }}
-                    </td>
-                    <td>
-                      <a href="{{ route('book.edit', $book->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                      <button data-id="1" type="button" data-toggle="modal" data-target="#modal-default" class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash"></i></button>
+                      <a href="{{ route('agenda.edit', $agenda->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                      <button data-id="{{ $agenda->id }}" type="button" data-toggle="modal" data-target="#modal-default" class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash"></i></button>
                     </td>
                   </tr>
                   @endforeach
                 </tbody>
-                <tfoot>
-                <tr>
-                    <th>No</th>
-                    <th>Buku</th>
-                    <th>Deskripsi</th>
-                    <th>Aksi</th>
-                </tr>
-                </tfoot>
+                
               </table>
         </div>
         <!-- /.card-body -->
@@ -154,7 +140,7 @@
     e.preventDefault();
 
     var id = $(this).data('id');
-    var url = "{{ route('book.destroy', 'id') }}".replace('id', id);
+    var url = "{{ route('agenda.destroy', 'id') }}".replace('id', id);
     $('#form-delete').attr('action', url);
   });
 </script>

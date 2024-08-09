@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GuruController;
@@ -67,6 +68,7 @@ Route::resources([
     // "siswa" => SiswaController::class,
     "kategori" => CategoryController::class,
     "book" => BookController::class,
+    "agenda" => AgendaController::class,
 ]);
 
 Route::get("/guru", [GuruController::class, "index"])->name("indexGuru");

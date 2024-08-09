@@ -21,7 +21,7 @@
 
       <!-- Main content -->
     <section class="content">
-        @if($errors->any())
+      @if($errors->any())
         <div class="row p-2">
           <div class="alert alert-danger col-12">
             <ul>
@@ -32,19 +32,20 @@
           </div>
         </div>
         @endif
-        <div class="card">
+        <div class="card">  
             <div class="card-body">
-                <form action="{{ route('kategori.store') }}" method="POST">
+                <form action="{{ route('kategori.update', $category->id) }}" method="POST">
+                  @method('PATCH')
                   @csrf
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input name="nama" type="text" value="{{ old('nama') }}" class="form-control" id="nama" placeholder="Masukkan nama kategori">
+                        <input name="nama" type="text" value="{{ $category->nama }}" class="form-control" id="nama" placeholder="Enter email">
                     </div>
                     <div class="form-group">
                         <label for="deskripsi">Deskripsi</label>
-                        <textarea name="deskripsi" placeholder="masukkan deskripsi kategori" class="form-control" id="deskripsi" rows="3"></textarea>
+                        <textarea name="deskripsi" placeholder="masukkan deskripsi" class="form-control" id="deskripsi" rows="3">{{ $category->deskripsi }}</textarea>
                     </div>
-                    <div class="d-flex">  
+                    <div class="d-flex">
                         <button type="submit" class="btn btn-primary mr-3">Simpan</button>
                         <a href="{{ route('kategori.index') }}" class="btn btn-secondary">Kembali</a>
                     </div>

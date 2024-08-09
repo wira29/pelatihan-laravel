@@ -34,7 +34,7 @@
         @endif`
         <div class="card">  
             <div class="card-body">
-                <form action="{{ route('book.update', $book->id) }}" method="POST">
+                <form action="{{ route('book.update', $book->id) }}" method="POST" enctype="multipart/form-data">
                   @method('PATCH')
                   @csrf
                       <div class="form-group">
@@ -53,6 +53,10 @@
                         <label for="deskripsi">Deskripsi</label>
                         <textarea name="deskripsi" placeholder="masukkan deskripsi" class="form-control" id="deskripsi" rows="3">{{ $book->deskripsi }}</textarea>
                     </div>
+                    <div class="form-group">
+                      <label for="gambar">Gambar</label>
+                      <input name="gambar" type="file" class="form-control" id="gambar" placeholder="Masukkan nama kategori">
+                  </div>
                     <div class="d-flex">
                         <button type="submit" class="btn btn-primary mr-3">Simpan</button>
                         <a href="{{ route('book.index') }}" class="btn btn-secondary">Kembali</a>

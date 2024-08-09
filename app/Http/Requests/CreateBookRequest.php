@@ -25,6 +25,7 @@ class CreateBookRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'nama' => 'required',
             'deskripsi' => 'required',
+            'gambar' => 'nullable|mimes:jpeg,png,jpg,svg',
         ];
     }
 
@@ -35,6 +36,8 @@ class CreateBookRequest extends FormRequest
             'category_id.exists' => 'Kategori tidak valid',
             'nama.required' => 'Nama harus diisi',
             'deskripsi.required' => 'Deskripsi harus diisi',
+            'gambar.required' => 'Gambar harus diisi',
+            'gambar.mimes' => 'Gambar harus berupa file gambar',
         ];
     }
 }

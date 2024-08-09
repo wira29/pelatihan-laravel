@@ -6,6 +6,7 @@ use App\Http\Requests\CreateBookRequest;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -36,7 +37,13 @@ class BookController extends Controller
      */
     public function store(CreateBookRequest $request)
     {
-        Book::query()->create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('gambar')) {
+            $data['gambar'] = $request->file('gambar')->store('buku');
+        }
+
+        Book::query()->create($data);
 
         return redirect()->route('book.index')->with('success', 'Data berhasil ditambahkan');
     }
@@ -55,7 +62,7 @@ class BookController extends Controller
     public function edit(string $id)
     {
         $data = [
-            'book' => Book::findOrFail($id),
+            'book' => Book::query()->findOrFail($id),
             'categories' => Category::query()->get(),
         ];
         return view('dashboard.book.edit', $data);
@@ -64,9 +71,26 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreateBookRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+        $buku = Book::query()->findOrFail($id);
+
+        if ($request->hasFile('gambar')) {
+            if ($buku->gambar) {
+                if (Storage::exists($buku->gambar)) {
+                    Storage::delete($buku->gambar);
+                }
+            }
+
+            $data['gambar'] = $request->file('gambar')->store('buku');
+        } else {
+            $data['gambar'] = $buku->gambar;
+        }
+
+        $buku->update($data);
+
+        return redirect()->route('book.index')->with('success', 'Data berhasil diupdate');
     }
 
     /**
@@ -74,6 +98,16 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $buku = Book::findOrFail($id);
+
+        if ($buku->gambar) {
+            if (Storage::exists($buku->gambar)) {
+                Storage::delete($buku->gambar);
+            }
+        }
+
+        $buku->delete();
+
+        return redirect()->route('book.index')->with('success', 'Data berhasil dihapus');
     }
 }

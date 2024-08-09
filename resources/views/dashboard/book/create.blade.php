@@ -34,12 +34,13 @@
         @endif
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('book.store') }}" method="POST">
+                <form action="{{ route('book.store') }}" method="POST" enctype="multipart/form-data">
                   @method('POST')
                   @csrf
                     <div class="form-group">
                         <label for="category">Kategori</label>
                         <select name="category_id" id="category" class="form-control" placeholder="Pilih kategori">
+                          <option value="">Pilih Kategori</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->nama }}</option>
                             @endforeach
@@ -53,6 +54,10 @@
                         <label for="deskripsi">Deskripsi</label>
                         <textarea name="deskripsi" placeholder="masukkan deskripsi kategori" class="form-control" id="deskripsi" rows="3"></textarea>
                     </div>
+                    <div class="form-group">
+                      <label for="gambar">Gambar</label>
+                      <input name="gambar" type="file" class="form-control" id="gambar" placeholder="Masukkan nama kategori">
+                  </div>
                     <div class="d-flex">  
                         <button type="submit" class="btn btn-primary mr-3">Simpan</button>
                         <a href="{{ route('book.index') }}" class="btn btn-secondary">Kembali</a>
